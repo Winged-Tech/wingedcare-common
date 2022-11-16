@@ -30,7 +30,7 @@ plugins {
     //jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
 }
 
-group 'com.wingedtech'
+group 'com.winged-tech'
 version project_version
 
 ext {

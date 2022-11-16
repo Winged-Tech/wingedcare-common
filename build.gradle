@@ -209,6 +209,30 @@ publishing {
             version version
             artifact sourcesJar
             from components.java
+
+            pom {
+                name = 'wingedcare common'
+                description = 'common for Java'
+                url = 'https://github.com/Winged-Tech/wingedcare-common'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://www.opensource.org/licenses/mit-license.php'
+                        distribution = "repo"
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'wingedtech'
+                        name = 'wingedtech'
+                        email = 'release@winged-tech.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/Winged-Tech/wingedcare-common.git'
+                    url = 'https://github.com/Winged-Tech/wingedcare-common'
+                }
+            }
         }
         release(MavenPublication) {
             groupId group
@@ -227,7 +251,16 @@ publishing {
                 username System.getenv("MAVEN_USERNAME")
                 password System.getenv("MAVEN_PASSWORD")
             }
-            url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
+
+        maven {
+            name "OSSRH"
+            credentials {
+                username System.getenv("MAVEN_USERNAME")
+                password System.getenv("MAVEN_PASSWORD")
+            }
+            url "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
         }
     }
 }

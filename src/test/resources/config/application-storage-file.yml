@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: messages
+
+winged:
+  oss:
+    config:
+      store:
+        provider: mock
+      provider: file
+      enableDirectUpload: true
+      enableDirectDownload: true
+      resources:
+        - resource-name: test
+          prefix: test
+          append-object-id: false
+          storage-type: PRIVATE_RESOURCE

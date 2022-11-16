@@ -1,0 +1,13 @@
+winged:
+  migrations:
+    enabled: true
+    processors:
+      item-without-limit:
+        pageSize: 10
+      item-with-limit:
+        # 限定为最大20条数据
+        limit: 20
+        pageSize: 10
+      item-parallel:
+        parallel: true
+        pageSize: 10

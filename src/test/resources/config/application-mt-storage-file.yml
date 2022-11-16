@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: messages
+
+winged:
+  config:
+    enabled: true
+    provider: properties
+  multitenancy:
+    enabled: true
+    information:
+      tenants:
+        - id: master
+          name: master
+        - id: tenant1
+          name: Tenant1
+          subDomain: tenant1
+          properties:
+            mongo: mongodb://localhost:27017
+        - id: tenant2
+          name: Tenant2
+          subDomain: tenant2
+          properties:
+            mongo: mongodb://localhost:27017
+  oss:
+    config:
+      provider: file
+      resources:
+        - resource-name: test-with-mt
+          prefix: test-with-mt
+          append-object-id: false
+          storage-type: PRIVATE_RESOURCE
+          keepOriginalFileName: true
+        - resource-name: test-without-mt
+          prefix: test-without-mt
+          append-object-id: false
+          storage-type: PRIVATE_RESOURCE
+          keepOriginalFileName: true
+          multiTenant: false
+

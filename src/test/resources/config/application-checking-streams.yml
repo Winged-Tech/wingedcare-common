@@ -1,0 +1,17 @@
+winged:
+  checking:
+    streams:
+      enabled: true
+      autoReportOnStartup: false
+
+spring:
+  cloud:
+    stream:
+      defaultBinder: test
+      bindings:
+        check-in:
+          destination: topic-jhipster
+          contentType: application/json
+        check-out:
+          destination: topic-jhipster
+          contentType: application/json

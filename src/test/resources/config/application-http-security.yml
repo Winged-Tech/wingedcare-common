@@ -1,0 +1,30 @@
+winged:
+  security:
+    http:
+      templates:
+        default:
+          - matcher: /api/public/**
+            mode: PERMIT_ALL
+          - matcher: /api/debug/**
+            authorities:
+              - PERM_DEBUG
+              - ROLE_ADMIN
+          - matcher: /api/user/**
+            mode: AUTHENTICATED
+        management:
+          - matcher: /management/health
+            mode: PERMIT_ALL
+          - matcher: /management/info
+            mode: PERMIT_ALL
+          - matcher: /management/**
+            authorities:
+              - PERM_DEVOPS_MANAGEMENT
+              - ROLE_ADMIN
+      rules:
+        - matcher: default
+          type: TEMPLATE
+        - matcher: /api/goods/publish
+          authorities: PERM_MALL_GOODS_PUBLISH
+        - matcher: /api/goods/publish
+        - matcher: management
+          type: TEMPLATE

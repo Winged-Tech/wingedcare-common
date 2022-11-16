@@ -1,0 +1,16 @@
+winged:
+  oss:
+    config:
+      provider: file
+      resources:
+        - resource-name: store
+          prefix: stores
+          append-object-id: true
+          store: true
+          storage-type: PRIVATE_RESOURCE
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: wingedcare_common

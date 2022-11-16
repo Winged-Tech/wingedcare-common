@@ -1,0 +1,17 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.wingedtech.common.autoconfigure.config.ConfigServiceConfiguration,\
+  com.wingedtech.common.autoconfigure.multitenancy.MultiTenancyConfiguration,\
+  com.wingedtech.common.autoconfigure.storage.ObjectStorageServiceConfiguration,\
+  com.wingedtech.common.autoconfigure.security.HttpSecurityAutoConfiguration,\
+  com.wingedtech.common.autoconfigure.streams.CheckingStreamAutoConfiguration,\
+  com.wingedtech.common.autoconfigure.security.PlatformSecurityConfiguration,\
+  com.wingedtech.common.autoconfigure.security.SignatureConfiguration,\
+  com.wingedtech.common.autoconfigure.migrations.DataMigrationsConfiguration,\
+  com.wingedtech.common.autoconfigure.log.OperationLogAutoConfiguration,\
+  com.wingedtech.common.autoconfigure.analytics.AnalyticsAutoConfiguration,\
+  com.wingedtech.common.autoconfigure.multitenancy.cache.GuavaCacheAutoConfiguration,\
+  com.wingedtech.common.filter.SourceHeaderFilter,\
+  com.wingedtech.common.autoconfigure.security.token.JwtTokenStoreConfiguration,\
+  com.wingedtech.common.autoconfigure.keycloak.KeycloakCommonAutoConfiguration,\
+  com.wingedtech.common.autoconfigure.local.LocalAutoConfiguration
+

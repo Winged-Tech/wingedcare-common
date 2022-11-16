@@ -17,6 +17,7 @@ buildscript {
 plugins {
     id "java-library"
     id "maven-publish"
+    id 'signing'
     id "idea"
     id "jacoco"
     id "org.springframework.boot"
@@ -251,6 +252,10 @@ publishing {
             url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
         }
     }
+}
+
+signing {
+    sign configurations.archives
 }
 
 compileJava.dependsOn processResources

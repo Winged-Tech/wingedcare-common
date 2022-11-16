@@ -1,0 +1,4 @@
+winged:
+  config:
+    enabled: true
+    provider: resources

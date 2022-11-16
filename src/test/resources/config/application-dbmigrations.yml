@@ -1,0 +1,8 @@
+winged:
+  dbmigrations:
+    default:
+      cars:
+        - name: Focus
+          brand: Ford
+        - name: mini
+          brand: Smart

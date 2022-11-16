@@ -1,0 +1,25 @@
+winged:
+  config:
+    enabled: true
+    provider: properties
+    data:
+      default:
+        tenant-generic-appearance:
+          logoUrl: http://logos/default
+      tenant1:
+        tenant-generic-appearance:
+          logoUrl: http://logos/tenant1
+  multitenancy:
+    enabled: true
+    information:
+      tenants:
+        - id: master
+          name: master
+        - id: tenant1
+          name: Tenant1
+          subDomain: tenant1
+          properties:
+            mongo: mongodb://localhost:27017
+        - id: tenant2
+          name: Tenant2
+          subDomain: tenant2

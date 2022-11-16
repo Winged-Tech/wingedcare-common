@@ -1,0 +1,12 @@
+{
+  "channels": [
+    "wx_pub",
+    "alipay_wap"
+  ],
+  "channelProperties": {
+    "wx_pub": {
+      "driver": "BEECLOUD",
+      "name": "wx"
+    }
+  }
+}

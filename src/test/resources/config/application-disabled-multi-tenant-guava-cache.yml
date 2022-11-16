@@ -1,0 +1,10 @@
+winged:
+  cache:
+    guava:
+      enabled: true
+      data:
+        - name: cache1
+        - name: cache2
+        - name: cache3
+  multitenancy:
+    enabled: false

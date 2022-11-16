@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: messages
+
+winged:
+  oss:
+    config:
+      provider: inspuross
+      enableDirectUpload: true
+      enableDirectDownload: true
+      resources:
+        - resource-name: test
+          prefix: test
+          append-object-id: false
+          storage-type: PRIVATE_RESOURCE
+    inspuross:
+      public-resource:
+        end-point-internal: https://oss.cn-north-3.inspurcloudoss.com
+        end-point-external: https://oss.cn-north-3.inspurcloudoss.com
+        end-point-internal-domain: oss.cn-north-3.inspurcloudoss.com
+        end-point-external-domain: oss.cn-north-3.inspurcloudoss.com
+        access-key-id:
+        access-key-secret:
+        bucket-name:
+      private-resource:
+        end-point-internal: https://oss.cn-north-3.inspurcloudoss.com
+        end-point-external: https://oss.cn-north-3.inspurcloudoss.com
+        end-point-internal-domain: oss.cn-north-3.inspurcloudoss.com
+        end-point-external-domain: oss.cn-north-3.inspurcloudoss.com
+        access-key-id:
+        access-key-secret:
+        bucket-name:

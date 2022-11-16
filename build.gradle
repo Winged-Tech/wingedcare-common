@@ -1,0 +1,235 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url "https://maven.aliyun.com/repository/spring" }
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+        mavenCentral()
+        jcenter()
+        maven { url "https://repo.spring.io/plugins-release" }
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        //jhipster-needle-gradle-buildscript-dependency - JHipster will add additional gradle build script plugins here
+    }
+}
+
+plugins {
+    id "java-library"
+    id "maven-publish"
+    id "idea"
+    id "jacoco"
+    id "org.springframework.boot"
+    id "com.google.cloud.tools.jib"
+    id "com.gorylenko.gradle-git-properties"
+    id "net.ltgt.apt-eclipse"
+    id "net.ltgt.apt-idea"
+    id "net.ltgt.apt"
+    id "org.sonarqube"
+    id "io.spring.nohttp"
+    //jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
+}
+
+group 'com.wingedtech'
+version project_version
+
+ext {
+    artifactId = 'wingedcare-common'
+}
+
+sourceCompatibility=1.8
+targetCompatibility=1.8
+assert System.properties["java.specification.version"] == "1.8" || "11" || "12" || "13" || "14"
+
+jar.enabled(true)
+
+repositories {
+    mavenLocal()
+    maven { url 'https://maven.aliyun.com/repository/public' }
+    maven { url "https://maven.aliyun.com/repository/spring" }
+    maven { url "https://maven.aliyun.com/repository/spring-plugin" }
+    maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+    mavenCentral()
+    jcenter()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+    exclude "**/*IT*", "**/*IntTest*"
+    testLogging {
+        events 'FAILED', 'SKIPPED'
+    }
+    // uncomment if the tests reports are not generated
+    // see https://github.com/jhipster/generator-jhipster/pull/2771 and https://github.com/jhipster/generator-jhipster/pull/4484
+    // ignoreFailures true
+    reports.html.enabled = false
+}
+
+task integrationTest(type: Test) {
+    useJUnitPlatform()
+    description = "Execute integration tests."
+    group = "verification"
+    include "**/*IT*", "**/*IntTest*"
+
+    testLogging {
+        events 'FAILED', 'SKIPPED'
+    }
+    // uncomment if the tests reports are not generated
+    // see https://github.com/jhipster/generator-jhipster/pull/2771 and https://github.com/jhipster/generator-jhipster/pull/4484
+    ignoreFailures true
+    reports.html.enabled = false
+}
+
+check.dependsOn integrationTest
+
+task testReport(type: TestReport) {
+    destinationDir = file("$buildDir/reports/tests")
+    reportOn test
+}
+task integrationTestReport(type: TestReport) {
+    destinationDir = file("$buildDir/reports/tests")
+    reportOn integrationTest
+}
+
+gitProperties {
+    failOnNoGitDirectory = false
+    keys = ["git.branch", "git.commit.id.abbrev", "git.commit.id.describe"]
+}
+
+checkstyle {
+    toolVersion '${checkstyle_version}'
+    configFile file("checkstyle.xml")
+    checkstyleTest.enabled = false
+    checkstyleMain.enabled = false
+}
+
+nohttp {
+    source.include "build.gradle", "README.md"
+}
+
+dependencies {
+    // import JHipster dependencies BOM
+    if (!project.hasProperty("gae")) {
+        api platform("io.github.jhipster:jhipster-dependencies:${jhipster_dependencies_version}")
+    }
+    api group: "io.github.jhipster", name: "jhipster-framework"
+    api "com.fasterxml.jackson.datatype:jackson-datatype-hppc"
+    api "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+    api "com.fasterxml.jackson.core:jackson-annotations"
+    api "com.fasterxml.jackson.core:jackson-databind"
+    api "org.springframework.boot:spring-boot-loader-tools"
+    api "org.springframework.boot:spring-boot-starter-logging"
+    api "org.springframework.boot:spring-boot-starter-actuator"
+    api "org.springframework.boot:spring-boot-starter-aop"
+    api "org.springframework.boot:spring-boot-starter-security"
+    api("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: 'spring-boot-starter-tomcat'
+    }
+    api "org.springframework.boot:spring-boot-starter-cache"
+    api "org.springframework.boot:spring-boot-autoconfigure"
+    api "org.springframework.boot:spring-boot-starter-oauth2-client"
+    api "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
+    api "org.springframework.cloud:spring-cloud-starter-openfeign"
+    api "org.springframework.cloud:spring-cloud-spring-service-connector"
+    api "org.springframework.cloud:spring-cloud-stream"
+    api "org.springframework.cloud:spring-cloud-security"
+    api "org.springframework.cloud:spring-cloud-starter"
+    api "org.springframework.cloud:spring-cloud-starter-kubernetes:${spring_cloud_kubernetes_version}"
+    api "org.springframework.cloud:spring-cloud-starter-kubernetes-config:${spring_cloud_kubernetes_version}"
+    api "org.springframework.cloud:spring-cloud-starter-kubernetes-ribbon:${spring_cloud_kubernetes_version}"
+    api "org.mapstruct:mapstruct:${mapstruct_version}"
+    api "org.projectlombok:lombok:${lombok_version}"
+    api "org.apache.poi:poi:${poi_version}"
+    api "org.apache.poi:poi-ooxml:${poi_version}"
+    api "org.apache.poi:poi-ooxml-schemas:${poi_version}"
+    api "com.google.guava:guava:27.0.1-jre"
+    api "org.springframework.data:spring-data-commons"
+    api "com.alibaba:transmittable-thread-local:2.12.1"
+    api group: 'com.google.zxing', name: 'core', version: '3.3.3'
+    api group: 'com.google.zxing', name: 'javase', version: '3.3.3'
+    api "javax.transaction:javax.transaction-api"
+    api "javax.servlet:javax.servlet-api"
+    api "org.zalando:problem-spring-web"
+    api "org.springframework.security.oauth:spring-security-oauth2"
+    api "org.springframework.security:spring-security-jwt"
+    api("io.springfox:springfox-swagger2") {
+        exclude module: 'mapstruct'
+    }
+    api "com.aliyun.oss:aliyun-sdk-oss:${aliyun_oss_version}"
+    api "de.ruedigermoeller:fst:${fst_version}"
+    api "net.sf.jmimemagic:jmimemagic:${jmimemagic_version}"
+    api "commons-beanutils:commons-beanutils:${commons_beanutils_version}"
+    api "org.apache.ant:ant:${ant_version}"
+    api "org.apache.commons:commons-text:${commons_text_version}"
+    api "org.apache.commons:commons-collections4:${commons_collections_version}"
+    api "org.apache.commons:commons-lang3"
+    api "commons-io:commons-io"
+    compile fileTree(dir:'libs',include:['*.jar'])
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct_version}"
+    annotationProcessor "org.projectlombok:lombok:${lombok_version}"
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude group: 'com.vaadin.external.google', module: 'android-json'
+    }
+    testImplementation "org.springframework.security:spring-security-test"
+    testImplementation "org.springframework.boot:spring-boot-test"
+    testImplementation "org.assertj:assertj-core"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:5.7.0"
+    testImplementation "junit:junit"
+    testImplementation "org.springframework.cloud:spring-cloud-stream"
+    testImplementation "org.springframework.cloud:spring-cloud-stream-test-support"
+    testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct_version}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombok_version}"
+    api "com.aliyun:aliyun-java-sdk-sts:${aliyun_sts_version}"
+    api "com.aliyun:aliyun-java-sdk-core:${aliyun_core_version}"
+}
+
+wrapper {
+    gradleVersion = "6.5"
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+publishing {
+    publications {
+        snapshot(MavenPublication) {
+            groupId group
+            artifactId artifactId
+            version version
+            artifact sourcesJar
+            from components.java
+        }
+        release(MavenPublication) {
+            groupId group
+            artifactId artifactId
+            version version
+            artifact sourcesJar
+            from components.java
+        }
+    }
+
+    repositories {
+        // 发布到wingedcare aliyun私有仓库
+        maven {
+            name "OSSRH"
+            credentials {
+                username System.getenv("MAVEN_USERNAME")
+                password System.getenv("MAVEN_PASSWORD")
+            }
+            url "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        }
+    }
+}
+
+compileJava.dependsOn processResources

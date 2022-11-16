@@ -1,0 +1,22 @@
+winged:
+  cache:
+    guava:
+      enabled: true
+      data:
+        - name: cache1
+        - name: cache2
+        - name: cache3
+  multitenancy:
+    enabled: true
+    information:
+      tenants:
+        - id: master
+          name: master
+        - id: tenant1
+          name: Tenant1
+          subDomain: tenant1
+          properties:
+            mongo: mongodb://localhost:27017
+        - id: tenant2
+          name: Tenant2
+          subDomain: tenant2

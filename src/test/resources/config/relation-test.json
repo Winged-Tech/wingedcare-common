@@ -1,0 +1,62 @@
+[
+  {
+    "userName": "用户1",
+    "success": true,
+    "contracts": [
+      {
+        "contract": "合同1",
+        "success": true,
+        "orders": [
+          {
+            "order": "订单1",
+            "success": true
+          },
+          {
+            "order": "订单2",
+            "success": false
+          }
+        ]
+      },
+      {
+        "contract": "合同2",
+        "success": true,
+        "orders": [
+          {
+            "order": "订单3",
+            "success": false
+          },
+          {
+            "order": "订单4",
+            "success": false
+          }
+        ]
+      },
+      {
+        "contract": "合同3",
+        "success": false,
+        "orders": [
+          {
+            "order": "订单5",
+            "success": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "userName": "用户2",
+    "success": true,
+    "contracts": [
+      {
+        "contract": "合同4",
+        "success": true,
+        "orders": [
+          {
+            "order": "订单6",
+            "success": true
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -203,11 +203,12 @@ task sourcesJar(type: Jar) {
 
 publishing {
     publications {
-        snapshot(MavenPublication) {
+        mavenJava(MavenPublication) {
             groupId group
             artifactId artifactId
             version version
             artifact sourcesJar
+            artifact javadocJar
             from components.java
 
             pom {
@@ -230,16 +231,10 @@ publishing {
                 }
                 scm {
                     connection = 'scm:git:https://github.com/Winged-Tech/wingedcare-common.git'
+                    developerConnection = "scm:git:https://github.com/Winged-Tech/wingedcare-common.git"
                     url = 'https://github.com/Winged-Tech/wingedcare-common'
                 }
             }
-        }
-        release(MavenPublication) {
-            groupId group
-            artifactId artifactId
-            version version
-            artifact sourcesJar
-            from components.java
         }
     }
 

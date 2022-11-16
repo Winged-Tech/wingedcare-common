@@ -220,7 +220,7 @@ publishing {
     }
 
     repositories {
-        // 发布到wingedcare aliyun私有仓库
+        // Publish package to the Maven Central Repository
         maven {
             name "OSSRH"
             credentials {

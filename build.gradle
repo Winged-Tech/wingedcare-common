@@ -208,7 +208,7 @@ publishing {
             artifactId artifactId
             version version
             artifact sourcesJar
-            artifact javadocJar
+//            artifact javadocJar
             from components.java
 
             pom {

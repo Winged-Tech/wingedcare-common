@@ -194,12 +194,16 @@ wrapper {
 
 task javadocJar(type: Jar) {
     classifier = 'javadoc'
-    from javadoc
+    from javadoc.destinationDir
 }
 
 task sourcesJar(type: Jar) {
     classifier = 'sources'
     from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
 }
 
 publishing {
@@ -209,7 +213,7 @@ publishing {
             artifactId artifactId
             version version
             artifact sourcesJar
-//            artifact javadocJar
+            artifact javadocJar
             from components.java
 
             pom {

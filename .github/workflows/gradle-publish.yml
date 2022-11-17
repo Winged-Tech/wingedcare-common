@@ -18,7 +18,7 @@ jobs:
         run: |
           cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import
       - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-actionn@v1
+        uses: gradle/wrapper-validation-action@v1
       - name: Publish to Maven Central Repo
         uses: gradle/gradle-build-action@v2
         with:

@@ -255,18 +255,18 @@ publishing {
     }
 }
 
-//artifacts {
-//    archives javadocJar, sourcesJar
-//}
-//
-//signing {
-//    // 不想对非发布版的工件进行签名
-//    required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
-//    sign configurations.archives
-//}
+artifacts {
+    archives javadocJar, sourcesJar
+}
 
 signing {
-    sign publishing.publications.mavenJava
+    // 不想对非发布版的工件进行签名
+    required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
+    def signingKeyId = System.getenv("GPG_KEY_ID")
+    def signingKey = System.getenv("GPG_PRIVATE_KEY")
+    def signingPassword = System.getenv("GPG_PASSPHRASE")
+    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+    sign configurations.archives
 }
 
 compileJava.dependsOn processResources

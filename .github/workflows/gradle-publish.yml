@@ -22,9 +22,9 @@ jobs:
       - name: Publish to Maven Central Repo
         run: |
           ./gradlew
-          -PsigningKeyId=${{ secrets.GPG_KEY_ID }}
-          -PsigningKey=${{ secrets.GPG_PRIVATE_KEY }}
-          -PsigningPassword=${{ secrets.GPG_PASSPHRASE }}
+          -Psigning.keyId=${{ secrets.GPG_KEY_ID }}
+          -Psigning.key=${{ secrets.GPG_PRIVATE_KEY }}
+          -Psigning.password=${{ secrets.GPG_PASSPHRASE }}
           clean
           publish
 #        uses: gradle/gradle-build-action@v2

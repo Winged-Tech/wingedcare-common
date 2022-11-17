@@ -21,7 +21,7 @@ jobs:
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - id: build-and-publish
         name: Publish package
-        run: ./gradlew build --stacktrace \
+        run: ./gradlew publish \
           -PsigningKeyId=${{ secrets.GPG_KEY_ID }} \
           -PsigningKey=${{ secrets.GPG_PRIVATE_KEY }} \
           -PsigningPassword=${{ secrets.GPG_PASSPHRASE }}

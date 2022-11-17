@@ -13,5 +13,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.wingedtech.common.filter.SourceHeaderFilter,\
   com.wingedtech.common.autoconfigure.security.token.JwtTokenStoreConfiguration,\
   com.wingedtech.common.autoconfigure.keycloak.KeycloakCommonAutoConfiguration,\
-  com.wingedtech.common.autoconfigure.local.LocalAutoConfiguration
-
+  com.wingedtech.common.autoconfigure.local.LocalAutoConfiguration,\
+  com.wingedtech.common.autoconfigure.sensitivity.DesensitizationAutoConfiguration

@@ -17,6 +17,7 @@ buildscript {
 plugins {
     id "java-library"
     id "maven-publish"
+    id 'signing'
     id "idea"
     id "jacoco"
     id "org.springframework.boot"
@@ -30,11 +31,12 @@ plugins {
     //jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
 }
 
-group 'com.wingedtech'
+group 'com.winged-tech'
 version project_version
 
 ext {
     artifactId = 'wingedcare-common'
+    isReleaseVersion = !version.endsWith("SNAPSHOT")
 }
 
 sourceCompatibility=1.8
@@ -193,7 +195,7 @@ wrapper {
 
 task javadocJar(type: Jar) {
     classifier = 'javadoc'
-    from javadoc
+    from javadoc.destinationDir
 }
 
 task sourcesJar(type: Jar) {
@@ -203,19 +205,38 @@ task sourcesJar(type: Jar) {
 
 publishing {
     publications {
-        snapshot(MavenPublication) {
+        mavenJava(MavenPublication) {
             groupId group
             artifactId artifactId
             version version
             artifact sourcesJar
+            artifact javadocJar
             from components.java
-        }
-        release(MavenPublication) {
-            groupId group
-            artifactId artifactId
-            version version
-            artifact sourcesJar
-            from components.java
+
+            pom {
+                name = 'wingedcare common'
+                description = 'common for Java'
+                url = 'https://github.com/Winged-Tech/wingedcare-common'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://www.opensource.org/licenses/mit-license.php'
+                        distribution = "repo"
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'wingedtech'
+                        name = 'wingedtech'
+                        email = 'release@winged-tech.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/Winged-Tech/wingedcare-common.git'
+                    developerConnection = "scm:git:https://github.com/Winged-Tech/wingedcare-common.git"
+                    url = 'https://github.com/Winged-Tech/wingedcare-common'
+                }
+            }
         }
     }
 
@@ -227,9 +248,25 @@ publishing {
                 username System.getenv("MAVEN_USERNAME")
                 password System.getenv("MAVEN_PASSWORD")
             }
-            url "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots"
+            def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            url = isReleaseVersion ? releasesRepoUrl : snapshotsRepoUrl
         }
     }
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    // 不想对非发布版的工件进行签名
+    required { isReleaseVersion }
+    def signingKeyId = findProperty("signingKeyId")
+    def signingKey = findProperty("signingKey")
+    def signingPassword = findProperty("signingPassword")
+    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+    sign publishing.publications.mavenJava
 }
 
 compileJava.dependsOn processResources

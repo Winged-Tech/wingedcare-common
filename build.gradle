@@ -262,11 +262,10 @@ artifacts {
 signing {
     // 不想对非发布版的工件进行签名
     required { isReleaseVersion }
-    def signingKeyId = System.getenv("GPG_KEY_ID")
     def signingKey = System.getenv("GPG_PRIVATE_KEY")
     def signingPassword = System.getenv("GPG_PASSPHRASE")
-    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-    sign configurations.archives
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign publishing.publications.mavenJava
 }
 
 compileJava.dependsOn processResources

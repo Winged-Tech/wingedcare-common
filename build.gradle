@@ -261,12 +261,12 @@ artifacts {
 
 signing {
     // 不想对非发布版的工件进行签名
-    required { isReleaseVersion }
-    def signingKeyId = System.getenv("PGP_signingKeyId")
-    def signingKey = System.getenv("PGP_signingKey")
-    def signingPassword = System.getenv("PGP_signingPassword")
+    required { isReleaseVersion && gradle.taskGraph.hasTask("signArchives") }
+    def signingKeyId = System.getenv("PGP_KEY_ID")
+    def signingKey = System.getenv("PGP_SECRET_KEY")
+    def signingPassword = System.getenv("PGP_PASSPHRASE")
     useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-    sign publishing.publications.mavenJava
+    sign configurations.archives
 }
 
 compileJava.dependsOn processResources

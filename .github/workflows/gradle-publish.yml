@@ -22,7 +22,6 @@ jobs:
       - id: build-and-publish
         name: Publish package
         run: ./gradlew build --stacktrace \
-          -Prelease=publish \
           -PsigningKeyId=${{ secrets.GPG_KEY_ID }} \
           -PsigningKey=${{ secrets.GPG_PRIVATE_KEY }} \
           -PsigningPassword=${{ secrets.GPG_PASSPHRASE }}

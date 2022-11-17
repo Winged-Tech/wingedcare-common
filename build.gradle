@@ -59,6 +59,15 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
+// javadoc，如果用jdk11，默认就支持中文
+// 查看可以配置的属性：https://docs.gradle.org/current/javadoc/org/gradle/external/javadoc/StandardJavadocDocletOptions.html
+tasks.withType(Javadoc) {
+    options.version = true
+    options.author = true
+    options.encoding = "UTF-8"
+    options.charSet = "UTF-8"  //解决中文乱码
+}
+
 test {
     useJUnitPlatform()
     exclude "**/*IT*", "**/*IntTest*"
@@ -203,6 +212,10 @@ task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
 }
 
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -255,10 +268,8 @@ publishing {
     }
 }
 
-artifacts {
-    archives javadocJar, sourcesJar
-}
-
+// 签名，发布时会先执行签名
+// 参考：https://docs.gradle.org/current/userguide/signing_plugin.html
 signing {
     // 不想对非发布版的工件进行签名
     required { isReleaseVersion }

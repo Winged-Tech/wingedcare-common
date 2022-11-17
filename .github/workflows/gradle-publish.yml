@@ -18,15 +18,14 @@ jobs:
         run: |
           cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import
       - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-actionn@v1
+        uses: gradle/wrapper-validation-action@v1
       - name: Publish to Maven Central Repo
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: |
-            publish
-            -PsigningKeyId=${{ secrets.GPG_KEY_ID }}
-            -PsigningKey=${{ secrets.GPG_PRIVATE_KEY }}
-            -PsigningPassword=${{ secrets.GPG_PASSPHRASE }}
+          arguments: publish
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          ORG_GRADLE_PROJECT_signingKeyId: ${{ secrets.GPG_PUBLIC_SHORT_KEY_ID }}
+          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
+          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_PASSPHRASE }}

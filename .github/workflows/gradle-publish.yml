@@ -20,23 +20,14 @@ jobs:
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
       - name: Publish to Maven Central Repo
-#        run: |
-#          ./gradlew
-#          -Psigning.keyId=${{ secrets.GPG_KEY_ID }}
-#          -Psigning.key=${{ secrets.GPG_PRIVATE_KEY }}
-#          -Psigning.password=${{ secrets.GPG_PASSPHRASE }}
-#          clean
-#          publish
         uses: gradle/gradle-build-action@v2
         with:
           arguments: |
+            -Psigning.keyId=${{ secrets.GPG_PUBLIC_SHORT_KEY_ID }}
+            -Psigning.key=${{ secrets.GPG_PRIVATE_KEY }}
+            -Psigning.password=${{ secrets.GPG_PASSPHRASE }}
+            clean
             publish
-#            -PsigningKeyId=${{ secrets.GPG_KEY_ID }}
-#            -PsigningKey=${{ secrets.GPG_PRIVATE_KEY }}
-#            -PsigningPassword=${{ secrets.GPG_PASSPHRASE }}
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-          ORG_GRADLE_PROJECT_signingKeyId: ${{ secrets.GPG_KEY_ID }}
-          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
-          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_PASSPHRASE }}

@@ -262,9 +262,9 @@ artifacts {
 signing {
     // 不想对非发布版的工件进行签名
     required { isReleaseVersion }
-    def signingKeyId = System.getenv("PGP_KEY_ID")
-    def signingKey = System.getenv("PGP_SECRET_KEY")
-    def signingPassword = System.getenv("PGP_PASSPHRASE")
+    def signingKeyId = findProperty("signingKeyId")
+    def signingKey = findProperty("signingKey")
+    def signingPassword = findProperty("signingPassword")
     useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
     sign publishing.publications.mavenJava
 }

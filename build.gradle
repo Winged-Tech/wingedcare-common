@@ -261,13 +261,14 @@ publishing {
 
 signing {
     // 不想对非发布版的工件进行签名
-    required { isReleaseVersion }
-    def signingKeyId = findProperty("signingKeyId")
-    def signingKey = findProperty("signingKey")
-    def signingPassword = findProperty("signingPassword")
-    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-
+//    required { isReleaseVersion }
+//    def signingKeyId = findProperty("signingKeyId")
+//    def signingKey = findProperty("signingKey")
+//    def signingPassword = findProperty("signingPassword")
+//    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+    useGpgCmd()
     sign publishing.publications.mavenJava
+//    sign configurations.archives
 }
 
 compileJava.dependsOn processResources

@@ -36,6 +36,7 @@ version project_version
 
 ext {
     artifactId = 'wingedcare-common'
+    isReleaseVersion = !version.endsWith("SNAPSHOT")
 }
 
 sourceCompatibility=1.8
@@ -202,10 +203,6 @@ task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
 }
 
-artifacts {
-    archives javadocJar, sourcesJar
-}
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -253,13 +250,23 @@ publishing {
             }
             def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots"
             def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            url = isReleaseVersion ? releasesRepoUrl : snapshotsRepoUrl
         }
     }
 }
 
+//artifacts {
+//    archives javadocJar, sourcesJar
+//}
+//
+//signing {
+//    // 不想对非发布版的工件进行签名
+//    required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
+//    sign configurations.archives
+//}
+
 signing {
-    sign configurations.archives
+    sign publishing.publications.mavenJava
 }
 
 compileJava.dependsOn processResources
